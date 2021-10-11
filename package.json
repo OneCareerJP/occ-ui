@@ -43,7 +43,8 @@
     "style-loader": "^2.0.0",
     "typescript": "~4.1.5",
     "vue-jest": "^5.0.0-0",
-    "vue-loader": "^16.8.1"
+    "vue-loader": "^16.8.1",
+    "vue-svg-loader": "^0.16.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

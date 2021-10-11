@@ -1,4 +1,16 @@
-import { createApp } from "vue";
-import App from "./App.vue";
+import { App } from "vue";
+import { OccHeading } from "@/components/atoms/OccHeading";
 
-createApp(App).mount("#app");
+const components = [OccHeading];
+
+const install = function (Vue: App) {
+  components.forEach((component) => {
+    Vue.component((component as any).this.$options.name, component);
+  });
+};
+
+export { OccHeading };
+
+export default {
+  install,
+};
