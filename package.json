@@ -1,7 +1,21 @@
 {
   "name": "occ-ui",
+  "description": "occ-ui is a component library for Vue.js(v3.0)",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OneCareerJP/occ-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OneCareerJP/occ-ui/issues"
+  },
+  "keywords": [
+    "occ-ui",
+    "vue",
+    "components"
+  ],
+  "main": "dist/mina-ui.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -11,7 +25,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "occ-ui": "git+https://BUNDLE_GITHUB__COM@github.com/OneCareerJP/occ-ui.git"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
