@@ -15,18 +15,17 @@
     "vue",
     "components"
   ],
-  "main": "dist/mina-ui.common.js",
-  "scripts": {
+  "main": "dist/occ-ui.common.js"
+,  "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build  --target lib --name occ-ui src/main.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "vue": "^3.0.0",
-    "occ-ui": "git+https://BUNDLE_GITHUB__COM@github.com/OneCareerJP/occ-ui.git"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
