@@ -84,7 +84,7 @@ export default defineComponent({
 
   &__color {
     &--black {
-      color: $occ-black;
+      color: $tx-black;
     }
   }
 
