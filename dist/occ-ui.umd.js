@@ -357,7 +357,7 @@ const __exports__ = /*#__PURE__*/exportHelper_default()(OccHeadingvue_type_scrip
 var components = [OccHeading];
 var install = function (Vue) {
     components.forEach(function (component) {
-        Vue.component(component.this.$options.name, component);
+        Vue.component(component.name, component);
     });
 };
 
