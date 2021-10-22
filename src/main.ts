@@ -3,9 +3,9 @@ import { OccHeading } from "@/components/atoms/OccHeading";
 
 const components = [OccHeading];
 
-const install = function (Vue: App) {
+const install = function (Vue: App): void {
   components.forEach((component) => {
-    Vue.component((component as any).this.$options.name, component);
+    Vue.component(component.name, component);
   });
 };
 
