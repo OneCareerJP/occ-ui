@@ -1,11 +1,15 @@
-import { App } from "vue";
+import Vue from "vue";
+import { VueConstructor } from "vue";
 import { OccHeading } from "@/components/atoms/OccHeading";
+
+Vue.config.productionTip = false;
 
 const components = [OccHeading];
 
-const install = function (Vue: App): void {
+const install = function (Vue: VueConstructor) {
   components.forEach((component) => {
-    Vue.component(component.name, component);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Vue.component((component as any).options.name, component);
   });
 };
 

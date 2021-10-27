@@ -19,7 +19,7 @@ module.exports = {
         .use('sass-resources-loader')
         .loader('sass-resources-loader')
         .options({
-          resources: [path.resolve(rootPath, './assets/app.scss')]
+          resources: [path.resolve(rootPath, './assets/scss/app.scss')]
         })
         .end();
     });

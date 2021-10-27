@@ -1,20 +1,14 @@
 <template>
-  <component :is="tagLevel" :class="classes" :style="lineClampClassName">
+  <component :is="tagLevel" :class="classes">
     <slot />
   </component>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import Vue from "vue";
+import { Data, Methods, Computed, Props } from "./types";
 
-export interface Props {
-  lineClamp: number;
-  level: number;
-  visual: string;
-  color: string;
-}
-
-export default defineComponent({
+export default Vue.extend<Data, Methods, Computed, Props>({
   name: "OccHeading",
   props: {
     level: {
@@ -32,35 +26,20 @@ export default defineComponent({
       type: String,
       default: "",
     },
-    lineClamp: {
-      type: Number,
-      default: 0,
-    },
   },
-  setup(props: Props) {
-    const tagLevel = computed(() => {
-      return `h${props.level}`;
-    });
-    const visualLevel = computed(() => {
-      return props.visual ? props.visual : props.level;
-    });
-    const lineClampClassName = computed(() => {
-      return props.lineClamp > 0
-        ? {
-            display: "-webkit-box",
-            overflow: "hidden",
-            "max-height": "initial",
-            "-webkit-line-clamp": `${props.lineClamp}`,
-            "-webkit-box-orient": "vertical",
-          }
-        : {};
-    });
-    const classes = computed(() => [
-      `occ-heading--${visualLevel.value}`,
-      props.color ? `occ-heading__color--${props.color}` : "",
-    ]);
-
-    return { classes, tagLevel, visualLevel, lineClampClassName };
+  computed: {
+    tagLevel() {
+      return `h${this.level}`;
+    },
+    visualLevel() {
+      return this.visual ? this.visual : this.level;
+    },
+    classes() {
+      return [
+        `occ-heading--${this.visualLevel}`,
+        this.color ? `occ-heading__color--${this.color}` : "",
+      ];
+    },
   },
 });
 </script>
@@ -71,15 +50,23 @@ export default defineComponent({
   font-weight: 700;
 
   &--1 {
-    font-size: 2.6rem;
+    font-size: 20px;
   }
 
   &--2 {
-    font-size: 22px;
+    font-size: 16px;
   }
 
   &--3 {
-    font-size: 18px;
+    font-size: 14px;
+  }
+
+  &--4 {
+    font-size: 12px;
+  }
+
+  &--5 {
+    font-size: 10px;
   }
 
   &__color {

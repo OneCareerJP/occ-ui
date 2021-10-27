@@ -28,20 +28,20 @@
       <div>
         <my-button
           size="small"
-          @click="$emit('logout')"
+          @onClick="onLogout"
           label="Log out"
           v-if="user"
         />
         <my-button
           size="small"
-          @click="$emit('login')"
+          @onClick="onLogin"
           label="Log in"
           v-if="!user"
         />
         <my-button
           primary
           size="small"
-          @click="$emit('createAccount')"
+          @onClick="onCreateAccount"
           label="Sign up"
           v-if="!user"
         />
@@ -65,6 +65,16 @@ export default {
     },
   },
 
-  emits: ["login", "logout", "createAccount"],
+  methods: {
+    onLogin() {
+      this.$emit("onLogin");
+    },
+    onLogout() {
+      this.$emit("onLogout");
+    },
+    onCreateAccount() {
+      this.$emit("onCreateAccount");
+    },
+  },
 };
 </script>

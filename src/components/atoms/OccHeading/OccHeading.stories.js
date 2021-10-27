@@ -22,10 +22,7 @@ export default {
 const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { OccHeading },
-  setup() {
-    return { args };
-  },
-  template: '<OccHeading v-bind="args">Heading</OccHeading>',
+  template: `<OccHeading v-bind="$props">{{ content }}</OccHeading>`,
 });
 
 export const Default = Template.bind({});
