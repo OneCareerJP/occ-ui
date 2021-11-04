@@ -5,41 +5,45 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Data, Methods, Computed, Props } from "./types";
+import { defineComponent, PropType, computed } from "@vue/composition-api";
 
-export default Vue.extend<Data, Methods, Computed, Props>({
+export interface Props {
+  level: number;
+  visual: string;
+  color: string;
+}
+
+export default defineComponent({
   name: "OccHeading",
   props: {
     level: {
-      type: Number,
-      validator(level: number) {
+      type: Number as PropType<Props["level"]>,
+      validator: (level: number) => {
         return [1, 2, 3, 4, 5, 6].includes(level);
       },
       default: 1,
     },
     visual: {
-      type: String,
+      type: String as PropType<Props["visual"]>,
       default: "",
     },
     color: {
-      type: String,
+      type: String as PropType<Props["color"]>,
       default: "",
     },
   },
-  computed: {
-    tagLevel() {
-      return `h${this.level}`;
-    },
-    visualLevel() {
-      return this.visual ? this.visual : this.level;
-    },
-    classes() {
-      return [
-        `occ-heading--${this.visualLevel}`,
-        this.color ? `occ-heading__color--${this.color}` : "",
-      ];
-    },
+  setup(props) {
+    const tagLevel = computed(() => {
+      return `h${props.level}`;
+    });
+    const visualLevel = computed(() => {
+      return props.visual ? props.visual : props.level;
+    });
+    const classes = computed(() => [
+      `occ-heading--${visualLevel.value}`,
+      props.color ? `occ-heading__color--${props.color}` : "",
+    ]);
+    return { classes, tagLevel, visualLevel };
   },
 });
 </script>
