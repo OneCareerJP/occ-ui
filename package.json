@@ -16,16 +16,25 @@
     "components"
   ],
   "main": "dist/occ-ui.common.js",
-    "scripts": {
+  "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build  --target lib --name occ-ui src/main.ts",
+    "build": "vue-cli-service build --target lib --name occ-ui src/main.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "vue-demi-switch 2 & start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "vue": "^3.0.0"
+    "vue-demi": "^0.12.1"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "vue": "^2.0.0 || >=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -56,6 +65,7 @@
     "sass-resources-loader": "^2.2.4",
     "style-loader": "^2.0.0",
     "typescript": "~4.1.5",
+    "vue": "^3.0.0",
     "vue-jest": "^5.0.0-0",
     "vue-loader": "^16.8.1",
     "vue-svg-loader": "^0.16.0"
