@@ -88,7 +88,7 @@ if (!argv.format || argv.format === "es") {
     input: "src/entry.esm.ts",
     external,
     output: {
-      file: "dist/vue2/occ-ui2.esm.js",
+      file: "dist/vue2/occ-ui.esm.js",
       format: "esm",
       exports: "named",
     },
@@ -130,7 +130,7 @@ if (!argv.format || argv.format === "es") {
 //     external,
 //     output: {
 //       compact: true,
-//       file: "dist/vue2/occ-ui2.ssr.js",
+//       file: "dist/vue2/occ-ui.ssr.js",
 //       format: "cjs",
 //       name: "OccUiVue2",
 //       exports: "auto",
@@ -162,7 +162,7 @@ if (!argv.format || argv.format === "es") {
 //     external,
 //     output: {
 //       compact: true,
-//       file: "dist/vue2/occ-ui2.min.js",
+//       file: "dist/vue2/occ-ui.min.js",
 //       format: "iife",
 //       name: "OccUiVue2",
 //       exports: "auto",

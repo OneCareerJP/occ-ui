@@ -30,5 +30,5 @@ if (!Vue || typeof Vue.version !== "string") {
   );
 } else if (Vue.version.startsWith("2.")) {
   console.log(`[occ-ui] installing for vue2 from dir ${dir}`);
-  copy("occ-ui2.esm.js");
+  copy("occ-ui.esm.js");
 }

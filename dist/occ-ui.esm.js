@@ -1240,7 +1240,7 @@ var __vue_render__ = function () {
   var _c = _vm._self._c || _h;
 
   return _c('div', {
-    staticClass: "occ-ui2-sample"
+    staticClass: "occ-ui-sample"
   }, [_c('p', [_vm._v("The counter was " + _vm._s(_vm.changedBy) + " to "), _c('b', [_vm._v(_vm._s(_vm.counter))]), _vm._v(".")]), _vm._v(" "), _c('button', {
     on: {
       "click": _vm.increment
@@ -1273,8 +1273,8 @@ var __vue_staticRenderFns__ = [];
 
 const __vue_inject_styles__ = function (inject) {
   if (!inject) return;
-  inject("data-v-483616f6_0", {
-    source: ".occ-ui2-sample[data-v-483616f6]{display:block;width:400px;margin:25px auto;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px}.occ-ui2-sample p[data-v-483616f6]{margin:0 0 1em}",
+  inject("data-v-83deb0cc_0", {
+    source: ".occ-ui-sample[data-v-83deb0cc]{display:block;width:400px;margin:25px auto;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px}.occ-ui-sample p[data-v-83deb0cc]{margin:0 0 1em}",
     map: undefined,
     media: undefined
   });
@@ -1282,7 +1282,7 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-483616f6";
+const __vue_scope_id__ = "data-v-83deb0cc";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;

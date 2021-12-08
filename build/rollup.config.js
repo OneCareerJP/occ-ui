@@ -93,7 +93,7 @@ if (!argv.format || argv.format === "es") {
     input: "src/entry.esm.ts",
     external,
     output: {
-      file: "dist/occ-ui2.esm.js",
+      file: "dist/occ-ui.esm.js",
       format: "esm",
       exports: "named",
     },
@@ -132,7 +132,7 @@ if (!argv.format || argv.format === "es") {
 //     external,
 //     output: {
 //       compact: true,
-//       file: 'dist/occ-ui2.ssr.js',
+//       file: 'dist/occ-ui.ssr.js',
 //       format: 'cjs',
 //       name: 'OccUi2',
 //       exports: 'auto',
@@ -155,7 +155,7 @@ if (!argv.format || argv.format === "es") {
 //     external,
 //     output: {
 //       compact: true,
-//       file: 'dist/occ-ui2.min.js',
+//       file: 'dist/occ-ui.min.js',
 //       format: 'iife',
 //       name: 'OccUi2',
 //       exports: 'auto',

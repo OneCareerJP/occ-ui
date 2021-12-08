@@ -52,7 +52,7 @@ export default /*#__PURE__*/defineComponent({
 </script>
 
 <template>
-  <div class="occ-ui2-sample">
+  <div class="occ-ui-sample">
     <p>The counter was {{ changedBy }} to <b>{{ counter }}</b>.</p>
     <button @click="increment">
       Click +1
@@ -73,7 +73,7 @@ export default /*#__PURE__*/defineComponent({
 </template>
 
 <style scoped>
-  .occ-ui2-sample {
+  .occ-ui-sample {
     display: block;
     width: 400px;
     margin: 25px auto;
@@ -82,7 +82,7 @@ export default /*#__PURE__*/defineComponent({
     text-align: center;
     padding: 25px;
   }
-  .occ-ui2-sample p {
+  .occ-ui-sample p {
     margin: 0 0 1em;
   }
 </style>
