@@ -1,28 +1,29 @@
 {
-  "name": "occ-ui",
-  "description": "occ-ui is a component library for Vue.js(v3.0)",
-  "version": "0.1.1",
-  "private": false,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/OneCareerJP/occ-ui.git"
-  },
-  "bugs": {
-    "url": "https://github.com/OneCareerJP/occ-ui/issues"
-  },
-  "keywords": [
-    "occ-ui",
-    "vue",
-    "components"
+  "name": "occ-ui2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/occ-ui2.ssr.js",
+  "browser": "dist/occ-ui2.esm.js",
+  "module": "dist/occ-ui2.esm.js",
+  "unpkg": "dist/occ-ui2.min.js",
+  "types": "dist/types/src/entry.esm.d.ts",
+  "files": [
+    "dist/*",
+    "src/**/*.vue",
+    "postinstall.js"
   ],
-  "main": "dist/occ-ui.common.js",
+  "sideEffects": false,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name occ-ui src/main.ts",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
-    "storybook": "vue-demi-switch 2 & start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "postinstall": "node ./postinstall.js",
+    "prebuild": "rimraf ./dist",
+    "prebuild:vue2": "vue-demi-switch 2",
+    "build:vue2": "cross-env VUE_VERSION=2 NODE_ENV=production rollup --config build/rollup.config_vue2.js",
+    "prebuild:vue3": "vue-demi-switch 3",
+    "build:vue3": "cross-env VUE_VERSION=3 NODE_ENV=production rollup --config build/rollup.config.js",
+    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
+  },
+  "engines": {
+    "node": ">=12"
   },
   "dependencies": {
     "vue-demi": "^0.12.1"
@@ -37,46 +38,33 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.15.8",
-    "@storybook/addon-actions": "^6.3.10",
-    "@storybook/addon-essentials": "^6.3.10",
-    "@storybook/addon-links": "^6.3.10",
-    "@storybook/vue3": "^6.3.10",
-    "@types/jest": "^27.0.2",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-plugin-unit-jest": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "@vue/test-utils": "^2.0.0-0",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^5.2.7",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-vue": "^7.0.0",
-    "lint-staged": "^9.5.0",
-    "prettier": "^2.2.1",
-    "sass": "^1.26.5",
-    "sass-loader": "^10.1.1",
-    "sass-resources-loader": "^2.2.4",
-    "style-loader": "^2.0.0",
-    "typescript": "~4.1.5",
-    "vue": "^3.0.0",
-    "vue-jest": "^5.0.0-0",
-    "vue-loader": "^16.8.1",
-    "vue-svg-loader": "^0.16.0"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@rollup/plugin-alias": "^3.1.2",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-typescript": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/compiler-sfc": "^3.0.11",
+    "@vue/composition-api": "^1.4.1",
+    "@zerollup/ts-transform-paths": "^1.7.18",
+    "cross-env": "^7.0.3",
+    "minimist": "^1.2.5",
+    "postcss": "^8.2.10",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.52.8",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "rollup-plugin-vue2": "npm:rollup-plugin-vue@^5.0.0",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.0.3",
+    "vue": "^2.6.14",
+    "vue-template-compiler": "^2.6.12"
   }
 }
