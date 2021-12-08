@@ -164,6 +164,16 @@ function recordEffectScope(effect, scope) {
     var vm = (_a = getCurrentInstance()) === null || _a === void 0 ? void 0 : _a.proxy;
     vm && vm.$on('hook:destroyed', function () { return effect.stop(); });
 }
+function getCurrentScope() {
+    return activeEffectScope;
+}
+/**
+ * @internal
+ **/
+function getCurrentScopeVM() {
+    var _a, _b;
+    return ((_a = getCurrentScope()) === null || _a === void 0 ? void 0 : _a.vm) || ((_b = getCurrentInstance()) === null || _b === void 0 ? void 0 : _b.proxy);
+}
 /**
  * @internal
  **/
@@ -356,6 +366,28 @@ function resolveSlots(slots, normalSlots) {
     }
     return res;
 }
+var vueInternalClasses;
+var getVueInternalClasses = function () {
+    if (!vueInternalClasses) {
+        var vm = defineComponentInstance(getVueConstructor(), {
+            computed: {
+                value: function () {
+                    return 0;
+                },
+            },
+        });
+        // to get Watcher class
+        var Watcher = vm._computedWatchers.value.constructor;
+        // to get Dep class
+        var Dep = vm._data.__ob__.dep.constructor;
+        vueInternalClasses = {
+            Watcher: Watcher,
+            Dep: Dep,
+        };
+        vm.$destroy();
+    }
+    return vueInternalClasses;
+};
 // must be a string, symbol key is ignored in reactive
 var RefKey = 'composition-api.refKey';
 
@@ -637,6 +669,63 @@ function reactive(obj) {
     var observed = observe(obj);
     setupAccessControl(observed);
     return observed;
+}
+
+// implement
+function computed(getterOrOptions) {
+    var vm = getCurrentScopeVM();
+    var getter;
+    var setter;
+    if (isFunction(getterOrOptions)) {
+        getter = getterOrOptions;
+    }
+    else {
+        getter = getterOrOptions.get;
+        setter = getterOrOptions.set;
+    }
+    var computedSetter;
+    var computedGetter;
+    if (vm && !vm.$isServer) {
+        var _a = getVueInternalClasses(), Watcher_1 = _a.Watcher, Dep_1 = _a.Dep;
+        var watcher_1;
+        computedGetter = function () {
+            if (!watcher_1) {
+                watcher_1 = new Watcher_1(vm, getter, noopFn, { lazy: true });
+            }
+            if (watcher_1.dirty) {
+                watcher_1.evaluate();
+            }
+            if (Dep_1.target) {
+                watcher_1.depend();
+            }
+            return watcher_1.value;
+        };
+        computedSetter = function (v) {
+            if (setter) {
+                setter(v);
+            }
+        };
+    }
+    else {
+        // fallback
+        var computedHost_1 = defineComponentInstance(getVueConstructor(), {
+            computed: {
+                $$state: {
+                    get: getter,
+                    set: setter,
+                },
+            },
+        });
+        vm && vm.$on('hook:destroyed', function () { return computedHost_1.$destroy(); });
+        computedGetter = function () { return computedHost_1.$$state; };
+        computedSetter = function (v) {
+            computedHost_1.$$state = v;
+        };
+    }
+    return createRef({
+        get: computedGetter,
+        set: computedSetter,
+    }, !setter, true);
 }
 
 function set(vm, key, value) {
@@ -1052,7 +1141,7 @@ function install(_vue) {
 install(Vue);
 Vue.version;
 
-var script = /*#__PURE__*/defineComponent({
+var script$2 = /*#__PURE__*/defineComponent({
   name: 'OccUi2Sample',
 
   data() {
@@ -1229,10 +1318,10 @@ function addStyle(id, css) {
 }
 
 /* script */
-const __vue_script__ = script;
+const __vue_script__$2 = script$2;
 /* template */
 
-var __vue_render__ = function () {
+var __vue_render__$2 = function () {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -1268,10 +1357,10 @@ var __vue_render__ = function () {
   }, [_vm._v("\n    Reset\n  ")])]);
 };
 
-var __vue_staticRenderFns__ = [];
+var __vue_staticRenderFns__$2 = [];
 /* style */
 
-const __vue_inject_styles__ = function (inject) {
+const __vue_inject_styles__$2 = function (inject) {
   if (!inject) return;
   inject("data-v-83deb0cc_0", {
     source: ".occ-ui-sample[data-v-83deb0cc]{display:block;width:400px;margin:25px auto;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px}.occ-ui-sample p[data-v-83deb0cc]{margin:0 0 1em}",
@@ -1282,7 +1371,222 @@ const __vue_inject_styles__ = function (inject) {
 /* scoped */
 
 
-const __vue_scope_id__ = "data-v-83deb0cc";
+const __vue_scope_id__$2 = "data-v-83deb0cc";
+/* module identifier */
+
+const __vue_module_identifier__$2 = undefined;
+/* functional template */
+
+const __vue_is_functional_template__$2 = false;
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+const __vue_component__$4 = /*#__PURE__*/normalizeComponent({
+  render: __vue_render__$2,
+  staticRenderFns: __vue_staticRenderFns__$2
+}, __vue_inject_styles__$2, __vue_script__$2, __vue_scope_id__$2, __vue_is_functional_template__$2, __vue_module_identifier__$2, false, createInjector, undefined, undefined);
+
+var __vue_component__$5 = __vue_component__$4;
+
+//   counter: number;
+//   initCounter: number;
+//   message: {
+//     action: string | null;
+//     amount: number | null;
+//   };
+// }
+
+var script$1 = /*#__PURE__*/defineComponent({
+  name: 'Sample2',
+
+  setup() {
+    const counter = ref(5);
+    return {
+      counter
+    };
+  } // data(): SampleData {
+  //   return {
+  //     counter: 5,
+  //     initCounter: 5,
+  //     message: {
+  //       action: null,
+  //       amount: null,
+  //     },
+  //   };
+  // },
+  // computed: {
+  //   changedBy() {
+  //     const { message } = this as SampleData;
+  //     if (!message.action) return 'initialized';
+  //     return `${message.action} ${message.amount || ''}`.trim();
+  //   },
+  // },
+  // methods: {
+  //   increment(arg: Event | number): void {
+  //     const amount = (typeof arg !== 'number') ? 1 : arg;
+  //     this.counter += amount;
+  //     this.message.action = 'incremented by';
+  //     this.message.amount = amount;
+  //   },
+  //   decrement(arg: Event | number): void {
+  //     const amount = (typeof arg !== 'number') ? 1 : arg;
+  //     this.counter -= amount;
+  //     this.message.action = 'decremented by';
+  //     this.message.amount = amount;
+  //   },
+  //   reset(): void {
+  //     this.counter = this.initCounter;
+  //     this.message.action = 'reset';
+  //     this.message.amount = null;
+  //   },
+  // },
+
+
+});
+
+/* script */
+const __vue_script__$1 = script$1;
+/* template */
+
+var __vue_render__$1 = function () {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    staticClass: "occ-ui-sample"
+  }, [_c('p', [_vm._v("The counter was " + _vm._s(_vm.changedBy) + " to "), _c('b', [_vm._v(_vm._s(_vm.counter))]), _vm._v(".")])]);
+};
+
+var __vue_staticRenderFns__$1 = [];
+/* style */
+
+const __vue_inject_styles__$1 = function (inject) {
+  if (!inject) return;
+  inject("data-v-4147b2a6_0", {
+    source: ".occ-ui-sample[data-v-4147b2a6]{display:block;width:400px;margin:25px auto;border:1px solid #ccc;background:#eaeaea;text-align:center;padding:25px}.occ-ui-sample p[data-v-4147b2a6]{margin:0 0 1em}",
+    map: undefined,
+    media: undefined
+  });
+};
+/* scoped */
+
+
+const __vue_scope_id__$1 = "data-v-4147b2a6";
+/* module identifier */
+
+const __vue_module_identifier__$1 = undefined;
+/* functional template */
+
+const __vue_is_functional_template__$1 = false;
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+const __vue_component__$2 = /*#__PURE__*/normalizeComponent({
+  render: __vue_render__$1,
+  staticRenderFns: __vue_staticRenderFns__$1
+}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, createInjector, undefined, undefined);
+
+var __vue_component__$3 = __vue_component__$2;
+
+var script = /*#__PURE__*/defineComponent({
+  // props: {
+  //   level: {
+  //     type: Number,
+  //     validator: (level: number) => {
+  //       return [1, 2, 3, 4, 5, 6].includes(level)
+  //     },
+  //     default: 1,
+  //   },
+  //   visual: {
+  //     type: String,
+  //     default: '',
+  //   },
+  //   color: {
+  //     type: String,
+  //     default: '',
+  //   },
+  //   lineClamp: {
+  //     type: Number,
+  //     default: 0,
+  //   },
+  //   title: {
+  //     type: Boolean,
+  //     default: false,
+  //   },
+  //   bold: {
+  //     type: Boolean,
+  //     default: false,
+  //   },
+  // },
+  name: 'OccHeading',
+
+  setup() {
+    const tagLevel = computed(() => {
+      return `h1`;
+    });
+    console.log({
+      tagLevel
+    });
+    return {
+      tagLevel
+    }; // const tagLevel = computed(() => {
+    //   return props.title ? `title` : `h${props.level}`
+    // })
+    // const visualLevel = computed(() => {
+    //   return props.visual ? props.visual : props.level
+    // })
+    // const lineClampClassName = computed(() => {
+    //   return props.lineClamp > 0
+    //     ? {
+    //         display: '-webkit-box',
+    //         overflow: 'hidden',
+    //         'max-height': 'initial',
+    //         '-webkit-line-clamp': `${props.lineClamp}`,
+    //         '-webkit-box-orient': 'vertical',
+    //       }
+    //     : {}
+    // })
+    //   return { tagLevel, visualLevel, lineClampClassName }
+  }
+
+});
+
+/* script */
+const __vue_script__ = script;
+/* template */
+
+var __vue_render__ = function () {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    staticClass: "occ-heading"
+  }, [_vm._t("default")], 2);
+};
+
+var __vue_staticRenderFns__ = [];
+/* style */
+
+const __vue_inject_styles__ = function (inject) {
+  if (!inject) return;
+  inject("data-v-48193f0b_0", {
+    source: ".occ-heading[data-v-48193f0b]{line-height:1.5;font-weight:400}",
+    map: undefined,
+    media: undefined
+  });
+};
+/* scoped */
+
+
+const __vue_scope_id__ = "data-v-48193f0b";
 /* module identifier */
 
 const __vue_module_identifier__ = undefined;
@@ -1300,4 +1604,4 @@ const __vue_component__ = /*#__PURE__*/normalizeComponent({
 
 var __vue_component__$1 = __vue_component__;
 
-export { __vue_component__$1 as OccUi2Sample };
+export { __vue_component__$1 as OccHeading, __vue_component__$5 as OccUi2Sample, __vue_component__$3 as Sample2 };
